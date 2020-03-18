@@ -1,16 +1,12 @@
-version: '3.1'
-
+version: '3'
 services:
-  db:
-    image: mysql:5.7
-    command: --default-authentication-plugin=mysql_native_password
+  blog:
+    image: hugo_log:v2
+    working_dir: /home/site/demo/
+    #command: "hugo server -D -b http://39.106.79.246 -p 8080 --appendPort=false"
     restart: always
-    environment:
-      MYSQL_ROOT_PASSWORD: 123456
-    container_name: mysql5.7
-    copy:
-      - ./data:/var/lib/mysql
-  ports:
-    - 3306:3306
-
-  ```
+    container_name: go_blog
+    volumes:
+      - ./demo/:/home/site/demo/
+    ports:
+      - "80:80"
