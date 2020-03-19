@@ -139,3 +139,96 @@ str="I will continuing my coding life forever"
 echo ${str%*ing}
 echo ${str%%*ing}
 ```
+
+
+### read
+用于读取用户输入并赋值给变量
+#### 基本用法
+`read [option] variables ...` 例如 `read input`
+
+#### 几个比较重要的参数
+1. `-p` 提示语
+2. `-t` 限定输入秒数
+3. `-e` 对功能键进行转义
+4. `-n` 限定用户输入字符数,到达指定字符数量后自动结束
+5. `-s` 静默模式,不显示用户输入内容
+6. `-a` 将用户输入装入数组
+7. `-d` delimiter,指定界定符代替传统的回车
+#### 举例
+```bash
+read -d "0" -p "请输入一些内容" info
+for i in ${info[*]};do
+    echo ${i}
+done
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

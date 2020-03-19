@@ -81,28 +81,89 @@
 #echo "从指定字符最后一次出现开始截取左边"
 #echo ${str%%*ing}
 
-echo "数组的定义"
-echo 初始化定义
-arr=(1,2,3,4)
-echo 单个赋值
-arr[6]=6
+#echo "数组的定义"
+#echo 初始化定义
+#arr=(1,2,3,4)
+#echo 单个赋值
+#arr[6]=6
+#
+#echo "访问单个"
+#echo ${arr[8]}
+#echo 访问全部
+#echo ${arr[*]}
+#
+#temp[1]=jason
+#echo ${temp[1]}
+#
+#echo 获取数组长度
+#echo ${#arr[*]}
+#echo 获取数组里面字符串长度
+#echo ${#arr[8]}
+#
+#echo "删除数组元素"
+#unset arr[1]
+#unset arr[2]
+#unset arr[3]
+#echo ${arr[*]}
 
-echo "访问单个"
-echo ${arr[8]}
-echo 访问全部
-echo ${arr[*]}
 
-temp[1]=jason
-echo ${temp[1]}
+#echo -e "接下来学习:\n"
+# -p prompt 弹出提示
+#read -p "请输入" name url age
+#echo "输入的name为:${name}"
+#echo "输入的name为:${url}"
+#echo "输入的name为:${age}"
 
-echo 获取数组长度
-echo ${#arr[*]}
-echo 获取数组里面字符串长度
-echo ${#arr[8]}
+# -n 指定接收字符的个数,达到个数立即停止读取,不用回车
+#read -n 2 -p "请输入:\n" char
+#echo $char
 
-echo "删除数组元素"
-unset arr[1]
-unset arr[2]
-unset arr[3]
-echo ${arr[*]}
+# -t 指定等待时间
+# -s 静默模式,不显示输入内容
+#if
+#    read -t 20 -sp "输入密码>" pass1 && printf "\n" &&
+#    read -t 20 -sp "第二次输入密码" pass2 && printf "\n"
+#    [ $pass1==$pass2 ]
+#then
+#    echo "密码正确"
+#else
+#    echo "密码不正确"
+#fi
+#
+#echo "read 实践"
+#
+#read -t 5 -n 2 -p  "说你是大傻逼>"
+#printf "\n"
+#echo ${?}
+
+#read -d "0" name hello
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
