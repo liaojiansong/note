@@ -201,6 +201,35 @@
 >##### `scp -r local/dir/ root@192.168.0.1:/root/temp`  将本地的local/dir/ 文件夹复制到远程服务器文件夹
 >##### `scp root@192.168.0.1:/root/remote/hello.txt /local/temp/`  将远程的/root/remote/hello.txt复制到本地文件夹
 
+### sftp 比scp 功能更加丰富
+#### sftp(secure file transfer program)
+>##### `sftp root@192.168.0.1` 开启文件传输服务
+>##### `help` 建立连接后输入help 查看更多信息
+
+
+### type
+#### 查看命令种类和归属
+`type cd`
+
+
+### alias 给命令定义别名
+#### 使用方式
+1. `alias` 列举当前系统正在使用的命令别名
+2. `alias timestamp='date +%s'` 自定义时间戳命令;这样的定义方式只对当前的有效
+#### 私人订制命令
+1. 订制当前用户的私人命令,打开 `~/.bashrc` 编写自己的命令即可
+2. 订制整个系统的命令,打开 `/etc/bashrc`
+
+
+### echo 
+#### 输出到标准输出
+1. 特殊用法加上 `-e` 将转义 `\n` 为换行符
+```shell script
+echo -e "hello\nworld"
+#hello
+#world
+```
+
 
 
 ### ssh(secure shell)登入原理和运用

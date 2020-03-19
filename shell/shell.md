@@ -49,3 +49,93 @@ function test() {
 
 test jason liao
 ```
+
+
+### 特殊变量
+#### 特殊变量列表如下
+| 符号 |作用 |
+|:---|:---|
+| $0 | 表示当前脚本文件名 |
+| $* | 传入当前脚本或函数的所有参数,字符串形式 |
+| $@ | 传入当前脚本或函数的所有参数,不加"" 时将会是一个数组,可以进行遍历 |
+| $# | 传入当前脚本或函数的参数的个数 |
+| $$ | 当前脚本运行的进程号 |
+| $? | 上一个命令退出状态,0 表示正常退出 1表示异常 |
+
+#### 举些例子
+```shell script
+function foo() {
+    echo "传入当前函数的参数个数为:${#}" #传入当前函数的参数个数为:2
+    echo "传入当前函数的参数具体为:${*}" #传入当前函数的参数具体为:hello world
+    echo "传入当前函数的参数具体为:${@}" #传入当前函数的参数具体为:hello world
+    echo "传入当前函数的运行进程号:${$}" #传入当前函数的运行进程号:31435
+}
+foo hello world
+```
+
+#### 详细解释一下  `$@`
+1. 当加上""的时候,得到的就是一个字符串
+2. 当不加""的时候,将得到一个参数数组
+```shell script
+for i in $@ ; do
+    echo $i
+done
+```
+
+
+#### `$?` 获取函数返回值
+```shell script
+function foo() {
+    return $((1+2))
+}
+foo
+echo $? # 输出3
+```
+
+
+### 字符串拼接和截取
+
+#### 字符串拼接
+```shell script
+# 很简单,直接放在一起就好了
+str1="hello"
+str2="world"
+echo "${str1}${str2}"
+```
+
+#### 字符串截取
+
+##### 按位置截取
+```shell script
+str="hello world"
+# 从第六个字符开始截取到最后
+echo ${str:6}
+
+# 从第六个字符开始截取2个 
+echo ${str:6:2}
+
+# 从倒数第五个位置开始截取到最后
+echo ${str:0-5}
+
+# 从倒数第五个位置截取2个
+echo ${str:0-5:2}
+
+```
+
+##### 按字符截取
+1. `#` 表示从左向右截取
+```shell script
+str="I will continuing my coding life forever"
+
+echo "从指定字符开始截取右边所有,不包含ing"
+echo ${str#*ing}  #  my coding life forever
+echo "从指定字符最后一个开始截取右边所有,不包含ing"
+echo ${str##*ing} #  life forever
+
+```
+2. `%` 表示从右向左截取
+```shell script
+str="I will continuing my coding life forever"
+echo ${str%*ing}
+echo ${str%%*ing}
+```
