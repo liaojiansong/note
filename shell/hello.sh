@@ -138,11 +138,144 @@
 
 #read -d "0" name hello
 
+# 学习if
+#read -p "请输入你的小钱钱>" deposit
+#if (( $deposit < 100 ));then
+#    echo "零花钱"
+#  elif (( $deposit > 101 && $deposit < 2000 ));then
+#    echo "吃饭钱"
+#  else
+#    echo "土豪啊"
+#fi
+
+#read a
+#read b
+#(($a == $b))
+#echo "退出状态" ${?}
 
 
+# 学习一下test 命令
+#read -p "请输入>" file
+# -e 判断文件是否存在
+# -f 判断文件是否存在,并且是否为普通文件
+# -c 判断文件是否存在,并且是否为字符设备文件
+# -d directory exists 判断目录是否存在
+# -s 判断文件是否存在,并且是否为空
+
+#if [ -d $file ];then
+#  echo "目录存在"
+#  else
+#    echo "no exists"
+#fi
+
+#if [ -s $file ];then
+#  echo "empty"
+#else
+#  echo notempty
+#fi
+
+#if [ -r $file ]
+#then
+#  echo "readable"
+#else
+#  echo "unreadable"
+#fi
+
+#if [ -w $file ]; then
+#    echo "writeable"
+#    echo 'kkkk' >> $file
+#else
+#    echo "unwriteable"
+#fi
+
+#if [ -x $file ]; then
+#    echo "yes"
+#fi
 
 
+#read -p "请输入两个数值" a b
+# -gt greater 大于
+# -ge greater or equal
+# -eq equal 等于
+# -lt less 小于
+# -le less or equal 小于或等于
+# -ne not equal 不等于
+#if [ $a -ne $b ]; then
+#    echo "not eq"
+#else
+#  echo "eq"
+#fi
 
+# 字符串比较
+#read a b
+# == 判断字符串是否相等
+# -n 判断字符串是否非空
+# -z 判断字符串是否空
+#if [ "$a" == "$b" ]; then
+#    echo "string equal"
+#    else
+#      echo "string not equal"
+#fi
+
+#if [ -z "$a" ]; then
+#    echo "empty"
+#    else
+#      echo "not empty "
+#fi
+
+#if [ -n "$a" ]; then
+#    echo "notempty"
+#fi
+
+# 字符串逻辑运算
+
+#if [ -n "$a" -a -n "$b" ]; then
+#    echo "all not empty"
+#fi
+
+
+#if [ -n "$a" -o -n "$b" ]; then
+#  echo 'or'
+#
+#fi
+#a='hello'
+#b='ta'
+#if [[ -n $a && -n $b ]]; then
+#    echo "get"
+#fi
+#read num
+#case $num in
+#1)
+#  echo "php"
+#  ;;    # 相当于break
+#2)
+#  echo "java"
+#  ;;
+#3)
+#  echo "go"
+#  ;;
+#4)
+#  echo "html"
+#  ;;
+#[5-9])  #正则
+#  echo "unknown"
+#  ;;
+#[a,b,c])#正则
+#  echo "database"
+#  ;;
+#*)      #正则 相当于default
+#  echo "shit"
+#  ;;
+#esac
+
+declare -i count
+count=1
+
+while (($count < 50 ))
+do
+  echo "hello"
+  ((count++))
+done
 
 
 

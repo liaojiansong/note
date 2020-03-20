@@ -222,13 +222,22 @@
 
 
 ### echo 
-#### 输出到标准输出
+输出到标准输出
 1. 特殊用法加上 `-e` 将转义 `\n` 为换行符
 ```shell script
 echo -e "hello\nworld"
 #hello
 #world
 ```
+
+### declare
+声明变量类型 `declare [option] variables`
+#### 常用的几个参数
+|参数|作用|
+|:---|:---|
+|-i|声明参数为整型|
+|-r|readonly声明参数为只读变量|
+|-p|查看变量的属性(变量有值是才能查看)|
 
 
 

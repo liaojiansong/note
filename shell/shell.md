@@ -155,19 +155,161 @@ echo ${str%%*ing}
 6. `-a` 将用户输入装入数组
 7. `-d` delimiter,指定界定符代替传统的回车
 #### 举例
-```bash
+```shell script
 read -d "0" -p "请输入一些内容" info
 for i in ${info[*]};do
     echo ${i}
 done
 ```
 
+### (())
+对整数进行算数运算,只能是整数
+#### 用法
+1. 简单逻辑运算
+```shell script
+echo $((1+2))
+i=10
+echo $((i+20)) # 30
+
+j=20
+$((j+=20))
+echo $j # 40
+```
+2. 逻辑运算
+```shell script
+echo $((1>2)) # 0
+
+echo $((3>1 && 5>2)) # 1
+```
+3. 自增自减
+```shell script
+# 先执行后自增
+a=10
+echo $((a++)) # 10 
+echo $a #11
+#先自增 后执行
+b=10
+echo $((++b)) # 11 
+echo $b       # 11
+```
+4. 多表达式运算
+```shell script
+echo $((a=1+2,b=2+3)) # 5 多表达式时候,只返回最后一个表达式的结果
+echo $a  # 3
+echo $b  # 5
+```
+
+### if语句
+1. 单纯的 `if`
+```shell script
+if [1==1];then;
+    echo "你好棒棒啊"
+fi 
+```
+2. `if then`
+```shell script
+read -p "请输入你的存款>" deposit
+if (($deposit > 50000));then
+  echo "土豪"
+else
+  echo "穷鬼"
+fi
+```
+3. `if then elif`
+```shell script
+read -p "请输入你的小钱钱>" deposit
+if (( $deposit < 100 ));then
+    echo "零花钱"
+  elif (( $deposit > 101 && $deposit < 2000 ));then
+    echo "吃饭钱"
+  else
+    echo "土豪啊"
+fi
+
+```
 
 
+### [] 和 test
+`[]` 等价于 `test`
+#### 用法
+```shell script
+# "[]" 两边一定要有空格, 变量一定要用""包起来
+if [ -f "$file"  ]; then
+    echo ""
+fi
+```
+#### 检测文件
+1. `[ -f "$file" ] --file exists` 检测文件是否存在
+2. `[ -d "$file" ] --directory exists` 检出目录是否存在
+3. `[ -e "$file" ] --file exists` 检查文件是否存在
+4. `[ -s "$file" ] --file not empty` 文件是否存在,并且不为空
+5. `[ -r "$file" ] --file readable` 文件是否可读
+6. `[ -w "$file" ] --file writeable` 文件是否可写
+7. `[ -x "$file" ] --file not empty` 文件是否可执行
+
+#### 检测数值
+```shell script
+if [ $a -gt $b ]; then
+    echo "greater"
+fi
+```
+1. `[ $a -gt $b] --greater than` 大于
+2. `[ $a -ge $b] --greater or equal` 大于等于
+3. `[ $a -lt $b] --less than` 小于
+4. `[ $a -le $b] --less or equal` 小于等于
+5. `[ $a -eq $b] --equal` 等于
+6. `[ $a -ne $b] --not equal` 不等于
+
+#### 检测字符串
+检测字符串可以用 `[]`的增强版 `[[ ]]`,这个时候就不需要将变量用 `""`包起来了,更加简洁
+```shell script
+if [[ -n "$string" ]]; then
+    echo "string is not empty"
+fi
+```
+1. `[[-n "$string"] -- string not empty` 字符串为不空
+2. `[[-z "$string"] -- string  empty` 字符串为空
+3. `[[-n $string && -n $string2]] -- all string not empty` 所有字符串都不为空
+4. `[[-n $string" || -n $string]] -- one of string are not empty` 其中一个字符串不为空
+
+### case in 语句
+```shell script
+case $num in
+1)
+  echo "php"
+  ;;    # 相当于break
+2)
+  echo "java"
+  ;;
+3)
+  echo "go"
+  ;;
+4)
+  echo "html"
+  ;;
+[5-9])  #正则
+  echo "unknown"
+  ;;
+[a,b,c])#正则
+  echo "database"
+  ;;
+*)      #正则 相当于default
+  echo "shit"
+  ;;
+esac
+```
 
 
-
-
+### while 语句
+```shell script
+declare -i count
+count=1
+while (($count < 50 ))
+do
+  echo "hello"
+  ((count++))
+done
+```
 
 
 
