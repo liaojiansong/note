@@ -268,15 +268,99 @@
 #  ;;
 #esac
 
-declare -i count
-count=1
 
-while (($count < 50 ))
-do
-  echo "hello"
-  ((count++))
-done
+# 简单for
+#declare -i count
+#count=1
+#
+#while (($count < 50 ))
+#do
+#  echo "hello"
+#  ((count++))
+#done
 
+
+# 循环列表for in
+# 给定列表 列表元素用空格分开
+#for j in 1 2 3 4 5 6
+#do
+#    echo $j
+#done
+
+#
+#for k in "php" "java" "go"
+#do
+#    echo $k
+#done
+
+# 给定范围 范围格式 {start..end}
+#for h in {A..z}
+#do
+#    echo $h
+#done
+#
+#for l in {1..9}; do
+#    echo $l
+#done
+
+# 使用命令的执行结果
+# seq start offset end
+# 利用$()获取命令执行的结果
+
+#for i in $(seq 2 2 100)
+#do
+#    echo "hello"$i
+#done
+
+# 遍历当前目录下的文件
+#for file in $(ls)
+#do
+#    echo "$file"
+#    if [[ -d $file ]]; then
+#        for son in $(ls $file); do
+#            echo $son
+#        done
+#
+#    fi
+#done
+
+# 简单实用
+#select name in java php go hello ;do
+#    echo $name
+#done
+
+# 搭配case 实用
+#echo "Which is the best language in the world?"
+#select lang in php java c go;
+#do
+#case $lang in
+#    "php")
+#        echo "nice"
+#        break
+#    ;;
+#    ["java","go","c"])
+#        echo "shit"
+#        break
+#    ;;
+#    *)
+#        echo "胆小鬼"
+#        break
+#    ;;
+#esac
+#done
+
+res=0
+function sum() {
+    for arg in ${@}; do
+        echo $arg
+        ((res+=arg))
+    done
+}
+
+
+#调用函数时候不需要()
+sum 1 2 3 4 5
+echo $res
 
 
 

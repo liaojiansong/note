@@ -312,6 +312,103 @@ done
 ```
 
 
+### for in 语句
+#### 形式一 normal
+最为普遍,当然也可以把i 提取到外面
+```bash
+declare -i a
+for ((i=1;i<100;i++))
+do
+    echo $i
+    ((i++))
+done
+
+for ((i=1;i<10;i++));do
+    echo "hello"
+    ((i++))
+done
+```
+
+#### 形式二 value list
+这种会遍历列表,列表元素之间用空格分割
+* 指定列表值
+```bash
+for i in 1 2 3 4 5 6
+do 
+    echo $i
+done
+```
+
+* 遍历命令执行结果 注意:利用 `$()` 获取命令执行的结果
+```bash
+for file in $(ls)
+do
+    if [[ -d $file ]]; then
+        for son in $(ls $file) ; do
+            echo $son
+        done
+    else
+        echo $file     
+    fi
+done
+```
+
+* 指定范围 注意:范围格式 `{start..end}`
+```bash
+for i in {1..9} ; do
+    echo $i
+done
+```
+
+### select in 语句
+弹出交互菜单,用户输入数字进行选择
+```bash
+select lang in php go java c ;
+do 
+    echo $lang
+done
+
+# select in 搭配 case in 实用最使用
+echo "Which is the best language in the world?"
+select lang in php java c go ;
+do
+    case $lang in
+        "php")
+            echo "nice"
+            break
+            ;;
+        ["java","go","c"])
+            echo "shit"
+            break
+            ;;
+        *)
+            echo "胆小鬼"
+            break
+            ;;
+    esac
+done
+```
+
+### 函数
+```bash
+function getsum(){
+    local sum=0
+    for n in $@
+    do
+         ((sum+=n))
+    done
+    echo $sum
+    return 0
+}
+#调用函数并传递参数，最后将结果赋值给一个变量
+total=$(getsum 10 20 55 15)
+echo $total
+#也可以将变量省略
+echo $(getsum 10 20 55 15)
+```
+
+
+
 
 
 

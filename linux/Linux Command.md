@@ -192,6 +192,29 @@
 ####  `env` 输出当前所有环境变量
 ####  `$PWD` 使用`$`符号调用环境变量
 
+### set 
+#### 查看当前可用的变量
+```
+OPTERR=1
+OPTIND=1
+OSTYPE=linux-gnu
+PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/usr/local/go/bin:/root/bin
+PIPESTATUS=([0]="0")
+PPID=5000
+PROMPT_COMMAND='printf "\033]0;%s@%s:%s\007" "${USER}" "${HOSTNAME%%.*}" "${PWD/#$HOME/~}"'
+PS1='[\u@\h \W]\$ '
+PS2='> '
+PS4='+ '
+PWD=/root
+SHELL=/bin/bash
+SHELLOPTS=braceexpand:emacs:hashall:histexpand:history:interactive-comments:monitor
+SHLVL=1
+SSH_CLIENT='59.42.109.212 16628 22'
+SSH_CONNECTION='59.42.109.212 16628 172.17.101.206 22'
+SSH_TTY=/dev/pts/0
+
+```
+
 
 ### scp 很常用
 #### scp(secure copy) ***安全的远程拷贝***
