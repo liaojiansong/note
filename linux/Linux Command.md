@@ -215,6 +215,27 @@ SSH_TTY=/dev/pts/0
 
 ```
 
+### chmod 
+#### 更改文件权限
+几个重要的选项
+1. `-o  --other` 其他用户
+2. `-u --user` 当前用户
+3. `-g --group` 用户组
+#### 具体使用例子
+```shell script
+chmod o+x hello.sh # 给其他用户添加执行权限
+chmod o-w hello.sh # 除去其他用户的写入权限
+```
+
+### sleep
+#### 指定脚本睡眠时间
+```shell script
+sleep 30
+sleep 1m 30s
+sleep 0.5h 2m 30s
+sleep 1d 2h 3m 40s
+
+```
 
 ### scp 很常用
 #### scp(secure copy) ***安全的远程拷贝***

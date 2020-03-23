@@ -349,26 +349,74 @@
 #esac
 #done
 
-res=0
-function sum() {
-    for arg in ${@}; do
-        echo $arg
-        ((res+=arg))
+#res=0
+#function sum() {
+#    for arg in ${@}; do
+#        echo $arg
+#        ((res+=arg))
+#    done
+#}
+#
+#
+##调用函数时候不需要()
+#sum 1 2 3 4 5
+#echo $res
+
+
+#declare -a arr
+##冒泡排序十个数
+#for((i=0;i<=9;i++))
+#do
+##使用内置随机变量产生十个1000以内的数
+#  arr[i]=$(($RANDOM%1000))
+#done
+#
+#
+#echo "${arr[@]}"
+#function fm(){
+#for (( a=0;a<=9;a++ ))
+#do
+#  for((b=a+1;b<=9;b++))
+#    do
+#   if [[ ${arr[a]} -gt ${arr[b]} ]]
+#    then
+#        x=${arr[a]}
+#        arr[$a]=${arr[b]}
+#        arr[$b]=$x
+#    fi
+#   done
+#done
+#}
+#fm
+#echo "${arr[@]}"
+
+
+
+declare -a box
+
+for (( w = 0; w < 9; w++ )); do
+    box[w]=$((RANDOM%1000))
+done
+
+echo "${box[@]}"
+
+
+# 开始排序
+
+length=${#box[@]}
+echo $length
+
+for (( x = 0; x <= length; x++ )); do
+    for (( y = x+1; y <= length; y++ )); do
+        if [[ ${box[x]} -gt ${box[y]} ]]; then
+           t=${box[x]}
+           box[$x]=${box[y]}
+           box[$y]=$t
+        fi
     done
-}
+done
 
-
-#调用函数时候不需要()
-sum 1 2 3 4 5
-echo $res
-
-
-
-
-
-
-
-
+echo ${box[*]}
 
 
 
