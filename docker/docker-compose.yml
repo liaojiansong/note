@@ -1,12 +1,25 @@
+#version: '3'
+#services:
+#  blog:
+#    image: hugo_log:v2
+#    working_dir: /home/site/demo/
+#    #command: "hugo server -D -b http://39.106.79.246 -p 8080 --appendPort=false"
+#    restart: always
+#    container_name: go_blog
+#    volumes:
+#      - ./demo/:/home/site/demo/
+#    ports:
+#      - "80:80"
+
 version: '3'
 services:
-  blog:
-    image: hugo_log:v2
-    working_dir: /home/site/demo/
-    #command: "hugo server -D -b http://39.106.79.246 -p 8080 --appendPort=false"
-    restart: always
-    container_name: go_blog
-    volumes:
-      - ./demo/:/home/site/demo/
-    ports:
-      - "80:80"
+    blog:
+        image: hexo:v1
+        working_dir: /home/site/nice/
+        restart: always
+        container_name: hexo
+        volumes:
+            - ./nice/:/home/site/nice/
+        ports:
+            - "80:80"
+#        command: /bin/bash engine.sh
