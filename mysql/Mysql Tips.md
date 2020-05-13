@@ -36,3 +36,121 @@ ___
 * explain 只能用于select语句
 * type 的值中 all 表示全表扫描,最差 常见的有 ref,eq_ref,range
 
+
+### 几条管理命令
+* 查看当前连接列表
+```mysql
+show processlist;
+```
+
+* 查看当前属性设置
+```mysql
+show variables;
+```
+
+### 关于连表更新删除
+#### 连表更新
+```mysql
+update table a,table b
+set a.username = b.name
+where a.id = b.id;
+```
+#### 连表删除
+```mysql
+delete a
+from table a
+         left join table b on a.id = b.login_id
+where b.id is null;
+```
+### 统计多个条件
+mysql 统计字段是会忽略空值,即(null)
+```mysql
+select count(id),
+       count(if(enter_proportion > 0.5, 1, null)),
+       count(if(enter_proportion > 0.8, 1, null))
+from ieas_channel_monitor;
+
+```
+
+### 关于修改表结构
+大表`ALTER TABLE`非常耗时，MySQL执行大部分修改表结果操作的方法是用新的结构创建一个张空表，从旧表中查出所有的数据插入新表，然后再删除旧表。尤其当内存不足而表又很大，而且还有很大索引的情况下，耗时更久。
+
+### 关于索引覆盖
+解释:覆盖索引是select的数据列只用从索引中就能够取得，不必读取数据行，换句话说查询列要被所建的索引覆盖。索引的字段不只包含查询列，还包含查询条件、排序等。
+#### 先了解一些概念
+1. 聚簇索引 => 主键索引
+2. 二级索引 => 非主键索引的其他都是二级索引,例如联合索引,唯一索引
+3. 回表查询 => 根据索引中指向的主键id,再次根据主键索引进行查询,称之为回表
+一般来说,普通索引中对应了主键id 即 age=12 => id[1,2,3,4],我们使用 ``where age = 12`` 时先得到 id = [1,2,3,4] 然后再依次查询.
+#### 使用覆盖索引
+解释:select的数据列只用从索引中就能够取得，不必读取数据行，换句话说查询列要被所建的索引覆盖。索引的字段不只包含查询列，还包含查询条件、排序等。
+
+## mysql 中比较冷门的语法
+### union/unionall 联合查询
+#### 用法和注意事项
+1. `union unionall` 用于合并两个查询语句的结构进行输出
+2. `union unionall` 联合结果时,字段名称可以不一样,但是字段属性和个数必须保持一致
+3. `union` 会对结果进行去重,而 `unionall` 不会,所以`unionall`效率比较高
+4. 要注意语句的执行顺序的优先性,最优先子句,然后到全语句,可以利用圆括号来制定优先级
+5. 联合查询会产生临时表,看情况选用
+6. 性能分析如下
+
+| id | select\_type | table | partitions | type | possible\_keys | key | key\_len | ref | rows | filtered | Extra |
+| :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
+| 1 | PRIMARY | ieas\_bidding | NULL | ref | idx\_name | idx\_name | 514 | const | 1 | 100 | NULL |
+| 2 | UNION | ieas\_bidding | NULL | ref | idx\_code | idx\_code | 130 | const | 2 | 100 | NULL |
+| NULL | UNION RESULT | &lt;union1,2&gt; | NULL | ALL | NULL | NULL | NULL | NULL | NULL | NULL | Using temporary |
+
+
+## mysql 语句的优化建议
+##### 1. 应尽量避免在where子句中使用or来连接条件
+##### 原因
+有可能不走索引造成全表扫描
+##### 方案
+利用 `union` 语句进行代替,用空间换时间
+```mysql
+explain select * from ieas_bidding where name = 'Floyd Lang' union select * from ieas_bidding where code = '6';
+```
+
+##### 2.数据量大时,谨慎分页
+##### 原因
+* 当偏移量最大的时候，查询效率就会越低，因为Mysql并非是跳过偏移量直接去取后面的数据，而是先把偏移量+要取的条数，然后再把前面偏移量这一段的数据抛弃掉再返回的。
+
+##### 方案
+* 利用 ``where id > ?`` 跳过一部分偏移量
+* ...
+
+##### 3.正确使用like 语句
+##### 原因
+不合理使用 like 会导致索引失效,全表扫描
+##### 方案
+1. 拒绝使用 ``%keyword%`` 语句
+2. 使用 `` keyword%`` 还是能利用到索引的
+
+##### 4.避免在索引列上使用函数
+##### 原因
+这样mysql 会放弃索引,全表扫描
+
+##### 应尽量避免在where子句中使用!=或<>操作符，否则将引擎放弃使用索引而进行全表扫描
+
+##### 5.使用联合索引时，注意索引列的顺序，一般遵循最左匹配原则。
+##### 6.应尽量避免在where子句中使用!=或<>操作符，否则将引擎放弃使用索引而进行全表扫描
+##### 7.可以将浮点数放大为整数进行存储,这样可以避免浮点数计算不准确和DECIMAL精确计算代价高的问题
+##### 8.连表查询中,只需要在关联顺序中的第二张表的相应列上创建索引即可
+分析:先看看连表查询的原理,先查询左表然后循环左表记录,按条件再去查询右表
+```
+outer_iterator = SELECT A.xx,A.c FROM A WHERE A.xx IN (5,6);
+outer_row = outer_iterator.next;
+while(outer_row) {
+    inner_iterator = SELECT B.yy FROM B WHERE B.c = outer_row.c;
+    inner_row = inner_iterator.next;
+    while(inner_row) {
+        output[inner_row.yy,outer_row.xx];
+        inner_row = inner_iterator.next;
+    }
+    outer_row = outer_iterator.next;
+}
+```
+* 确保任何的GROUP BY和ORDER BY中的表达式只涉及到一个表中的列，这样MySQL才有可能使用索引来优化
+* 必须在右表外键上建立索引
+

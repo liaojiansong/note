@@ -752,10 +752,142 @@ for _, value := range l {
 
 在函数调用时，切片（slice）、字典（map）、接口（interface）、通道（channel）这样的引用类型 默认使用引用传参
 
+### 函数参数传递方式
+
+- 传值：函数调用时会对参数进行拷贝，被调用方和调用方两者持有不相关的两份数据；
+- 传引用：函数调用时会传递参数的指针，被调用方和调用方两者持有相同的数据，任意一方做出的修改都会影响另一方。
+
+举例说明
+
+```go
+type Person struct {
+	name string
+}
+
+func main() {
+    // 切片=> 传引用
+	var books = []string{"TCP/IP", "大话数据结构"}
+	fmt.Printf("内存地址:%p\n", books)
+	show(books)
+
+    // map => 传引用
+	var food = map[string]string{"苹果": "酸的"}
+	fmt.Printf("内存地址:%p\n", food)
+	eat(food)
+	// struct => 传引用
+	var p = Person{"马云"}
+	fmt.Printf("内存地址:%p\n", &p)
+	intuition(p)
+    
+    // 接口 => 传值
+    var desk interface{}
+	desk = "大书桌"
+	fmt.Printf("内存地址:%p\n", &desk)
+	what(desk)
+    
+    // 其他基本数据类型 => 传值
+
+}
+
+func show(books []string) {
+	fmt.Printf("内存地址:%p\n", books)
+}
+
+func eat(food map[string]string) {
+	fmt.Printf("内存地址:%p\n", food)
+}
+
+func intuition(p Person) {
+	fmt.Printf("内存地址:%p\n", &p)
+}
+
+func what(w interface{}) {
+	fmt.Printf("内存地址:%p\n", &w)
+}
+```
+
+
+
 ### 函数需要关注的几个点
 
 1. 函数是代码封装复用的一种形式
 2. 可以利用return 结束函数,for循环,goroutine
+
+### 函数的几种类型
+1. 普通函数
+2. 匿名函数
+3. 方法
+
+#### 函数也是一种类型
+以下示例将函数赋值给一个变量,然后执行他
+```go
+func add(a int,b int)(int){
+    return a+b
+}
+func main(){
+    // 定义一个这种类型
+    var f func(a int,b int) (int)
+    f = add   
+    fmt.Printf(f(1,2)))
+}
+```
+#### 匿名函数
+匿名函数是一种没有名字的函数,可以立即定义立即使用,也可以赋值给变量,重复调用
+
+* 立即调用
+
+```go
+func main(){
+    func(msg string){
+        fmt.Println(msg)
+    }("小虾米")
+}
+```
+
+* 赋值给变量
+
+```go
+func main(){
+    var f func(a,b int)(int)
+    f = func(a,b int)(int){
+        return a+b
+    }
+    println(f(1,2))
+    println(f(2,3))  
+}
+```
+
+* 或者直接作为函数参数
+
+```go
+func main(){
+    var list =  []string{"小明","肖鸿飞","董佳敏"}
+    // 当匿名函数作为函数参数时候,一定要符合要求
+    show(list,func(value string){
+        fmt.Println(value)
+    })
+    
+    
+    foods := map[string]string{"苹果":"酸的","冰棍":"真香"}
+    eat(foods,func(name,desc string){
+        fmt.Printf("我想说%s:%s\n",name,desc)
+    })
+}
+// 声明一个函数,第一个参数是切片,第二个参数是特定的函数类型
+func show(list []string,foo func(name string)){
+    for _,value :=range list{
+        foo(value)
+    }
+}
+
+func eat(foods map[string]string,action func(name,desc string)){
+    for index,desc := range foods{
+        action(index,desc)
+    }
+}
+```
+
+
 
 # 结构体
 
