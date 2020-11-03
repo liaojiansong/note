@@ -40,8 +40,9 @@
  # |  |  |  |  |
  # *  *  *  *  * user-name  command to be executed
  15,16 * * * * root echo "每15,16分钟执行的任务" >> /home/jason/book/test.txt
- 19-22 * * * * root echo "19-21分钟执行的任务" >> /home/jason/book/test.txt
+ 19-22/2 * * * * root echo "19-21分钟内每2分钟执行的任务" >> /home/jason/book/test.txt
  35 15 * * * root echo "15:35执行的任务" >> /home/jason/book/test.txt
+ */3 * * * * root echo "每3分钟" >> /home/jason/book/test.txt
  0 2,16 * * * root echo "每天2点和16点0分执行的任务" >> /home/jason/book/test.txt
  * * * * * root echo "每分钟执行的任务" >> /home/jason/book/test.txt
 
@@ -172,6 +173,20 @@
 >> mkdir book
 >> mkdir cat
 >> ```
+
+### awk
+#### 很牛逼的文件处理器
+#### 示例 `ps -ef |awk '{print $2}'`,输出第三列
+#### 几个重要的参数
+|参数|作用|
+|:---|:---|
+|-F|--field separator 指定字段分隔符|
+|-v|--assign variable 自定义变量|
+|
+
+
+
+
 
 ### jobs
 #### jobs ***查看当前shell挂起的任务(按Ctrl+Z 挂起任务)***

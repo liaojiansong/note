@@ -17,3 +17,7 @@
 
 #### 片偏移
 当前数据包相对于完整数据包的偏移量,单位是8字节
+
+#### TIME_WAIT
+
+time_wait = 2MSL,MSL(max segment lifetime),帧最长生存时间,超过就会被丢弃,在linux中,一个MSL=60秒
