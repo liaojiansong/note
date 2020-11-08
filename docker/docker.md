@@ -241,6 +241,42 @@ ENV MYSQL_ROOT_PASSWORD 123456
 EXPOSE 3306
 ```
 
+```dockerfile
+FROM redis:6.0
+RUN mkdir -p /usr/local/etc/redis
+COPY redis.conf /usr/local/etc/redis/redis.conf
+
+#VOLUME /data
+EXPOSE 6379
+CMD ["redis-server", "/usr/local/etc/redis/redis.conf"]
+```
+```dockerfile
+FROM php:7.4-fpm
+RUN docker-php-ext-configure bcmath --enable-bcmath \
+    && docker-php-ext-configure pcntl --enable-pcntl \
+    && docker-php-ext-configure pdo_mysql --with-pdo-mysql \
+    && docker-php-ext-configure pdo_pgsql --with-pgsql \
+    && docker-php-ext-configure mbstring --enable-mbstring \
+    && docker-php-ext-install \
+        bcmath \
+        intl \
+        mbstring \
+        mysqli \
+        pcntl \
+        pdo_mysql \
+        pdo_pgsql \
+        sockets \
+        zip \
+  && docker-php-ext-configure gd \
+    --enable-gd-native-ttf \
+    --with-jpeg-dir=/usr/lib \
+    --with-freetype-dir=/usr/include/freetype2 && \
+    docker-php-ext-install gd \
+  && docker-php-ext-install opcache \
+  && docker-php-ext-enable opcache
+
+
+```
 ```yaml
 version: '3'
 services:

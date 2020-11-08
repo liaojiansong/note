@@ -1,11 +1,13 @@
 ### 插播几条win10快捷键
 #### `win+D` 快速最小化当前窗口
 #### `win+R` 快速运行CMD
+
 #### `win+E` 快速打开我的电脑
 
 
 ### 命令行快捷键
 #### ***Ctrl 类***
+
 ##### `Ctrl + R` 查找历史命令(多按几次就多查几个)
 ##### `Ctrl + W` 从光标处往前删除一个单词
 ##### `Ctrl + K` 从光标处往后删除所有
@@ -82,7 +84,13 @@
 ### Linux 常用命令
 ### grep
 #### grep ***(global search regular expression and print out the line) 全局搜索并打印***
+
+1. `cat redis.conf |grep -n "set"` 显示行号
+2. `cat redis.conf |grep -v "#" |grep -v "^$"` 反选模式过滤注释和空白行
+
+
 >##### `-o  --only-matching` 仅仅显示匹配中的
+>
 >##### `-i  -- ignore-case` 忽略大小写
 >##### `-w  -- word-regexp` 匹配整个单词
 >##### `-v  -- invert-match` 反选

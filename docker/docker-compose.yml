@@ -24,14 +24,82 @@
 #            - "80:80"
 #        command: /bin/bash engine.sh
 
-version: 3
-services:
-  nginx:
-      image: nginx
-      restart: always
-      container_name: main_nginx
-      volumes:
-        - ./conf.d:/etc/nginx/conf.d/
+#version: 3
+#services:
+#  nginx:
+#      image: nginx
+#      restart: always
+#      container_name: main_nginx
+#      volumes:
+#        - ./conf.d:/etc/nginx/conf.d/
+#
+#      ports:
+#        - 80:80
 
-      ports:
-        - 80:80
+#version: '3'
+#services:
+#  nginx:
+#    image: nginx:1.19
+#    restart: always
+#    container_name: nginx_
+#    volumes:
+#      - ./conf/nginx/conf.d:/etc/nginx/conf.d/
+#      - ./conf/nginx/nginx.conf:/etc/nginx/nginx.conf
+#      - ./logs:/var/log/nginx
+#      - ./data/www:/usr/share/nginx/html
+#    ports:
+#      - 8686:80
+#
+#  redis:
+#    build:
+#      context: ./bulid/redis
+#      dockerfile: Dockerfile
+#    container_name: redis_
+#    restart: always
+#    volumes:
+#      - ./data/redis:/data
+#      - ./logs/redis_error.log:/var/log/redis/redis-server.log
+#    ports:
+#      - 6379:6379
+#    depends_on:
+#      - nginx
+#
+#  mysql:
+#    image: mysql:5.7
+#    container_name: mysql_
+#    restart: always
+#    ports:
+#      - 8688:3306
+#    command:
+#      - --default-authentication-plugin=mysql_native_password
+#      - --character-set-server=utf8mb
+#      - --collation-server=utf8mb4_unicode_ci
+#
+#    environment:
+#      - MYSQL_ROOT_PASSWORD=Liao537821
+#
+#    volumes:
+#      - ./data/mysql:/var/lib/mysql
+#      - ./logs/mysql:/var/log/mysql
+#
+#  php:
+#    build:
+#      context: ./build/php
+#      dockerfile: Dockerfile
+#    container_name: php_
+#    restart: always
+#
+#    ports:
+#      - "8689:9000"
+#    links:
+#      - "mysql"
+#      - "redis"
+
+
+
+
+
+
+
+
+
