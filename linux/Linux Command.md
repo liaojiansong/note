@@ -83,8 +83,8 @@
 
 ### Linux 常用命令
 ### grep
-#### grep ***(global search regular expression and print out the line) 全局搜索并打印***
-
+grep ***(global search regular expression and print out the line) 全局搜索并打印***
+##### 常用参数
 1. `cat redis.conf |grep -n "set"` 显示行号
 2. `cat redis.conf |grep -v "#" |grep -v "^$"` 反选模式过滤注释和空白行
 
@@ -99,6 +99,14 @@
 >##### `-r  -- recursive` 递归查找,主要用于查找某个目录下文件内容
 >##### `-E  --extended-regexp` 正则匹配
 >> ###### 例如: `grep  -r "global" gg/ ` 查找gg目录下所有文件是否包含"global"
+##### 输出控制参数
+```shell
+  -B, --before-context=NUM  print NUM lines of leading context （多显示匹配文本的上面N行）
+  -A, --after-context=NUM   print NUM lines of trailing context（多显示匹配文本的下面N行）
+  -C, --context=NUM         print NUM lines of output context （多显示匹配文本的上下面N行）
+
+```
+
 
 
 ### tail
